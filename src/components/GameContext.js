@@ -25,7 +25,7 @@ export const GameProvider = ({ children }) => {
 
     React.useEffect(() => {
         const handleUnload = () => {              
-          window.localStorage.setItem('time', JSON.stringify(Math.round(new Date() / 1000))); 
+          window.localStorage.setItem('time', JSON.stringify(Date.now())); 
         };
       
         window.addEventListener("unload", handleUnload);
@@ -33,16 +33,16 @@ export const GameProvider = ({ children }) => {
         return () => {
           window.removeEventListener("unload", handleUnload);
         };
-      }, []);
+      }, []);    
     
       React.useEffect(() => {
         const cookieSeconde = calculateCookiesPerSecond(purchasedItems);
         if (cookieSeconde === 0)
             return;
-        const storedTime = JSON.parse(window.localStorage.getItem('time'));   
-        const actualTime = Math.round(new Date() / 1000);
-        const timeDiffSeconds = actualTime - storedTime;      
-        if (storedTime && timeDiffSeconds) {     
+        const storedTime = JSON.parse(window.localStorage.getItem('time')); 
+        const timeDiffSeconds = Math.round((Date.now() - storedTime)/1000);         
+
+        if (storedTime && timeDiffSeconds) {              
            setNumCookies((c) => c + cookieSeconde * timeDiffSeconds); 
         } 
         window.localStorage.setItem('time', null);        
