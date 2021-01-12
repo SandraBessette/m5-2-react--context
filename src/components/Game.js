@@ -10,7 +10,7 @@ import { GameContext } from './GameContext';
 
 const Game = () => {
   const {numCookies, setNumCookies, purchasedItems, setPurchasedItems, cookiesPerSecond} = React.useContext(GameContext);
-  
+
   const incrementCookies =  React.useCallback(()=>{
     setNumCookies((c) => c + 1);
   }, [setNumCookies]);
@@ -29,7 +29,7 @@ const Game = () => {
         incrementCookies();
       }
     };
-  console.log('tes');
+  
     window.addEventListener("keydown", handleKeydown);
 
     return () => {

@@ -18,10 +18,37 @@ export const GameProvider = ({ children }) => {
             const numOwned = purchasedItems[itemId];
             const item = items.find((item) => item.id === itemId);
             const value = item.value;
-          
+              
             return acc + value * numOwned;
-             }, 0);
+        }, 0);
+    };
+
+    React.useEffect(() => {
+        const handleUnload = () => {              
+          window.localStorage.setItem('time', JSON.stringify(Math.round(new Date() / 1000))); 
         };
+      
+        window.addEventListener("unload", handleUnload);
+    
+        return () => {
+          window.removeEventListener("unload", handleUnload);
+        };
+      }, []);
+    
+      React.useEffect(() => {
+        const cookieSeconde = calculateCookiesPerSecond(purchasedItems);
+        if (cookieSeconde === 0)
+            return;
+        const storedTime = JSON.parse(window.localStorage.getItem('time'));   
+        const actualTime = Math.round(new Date() / 1000);
+        const timeDiffSeconds = actualTime - storedTime;      
+        if (storedTime && timeDiffSeconds) {     
+           setNumCookies((c) => c + cookieSeconde * timeDiffSeconds); 
+        } 
+        window.localStorage.setItem('time', null);        
+           
+    }, [setNumCookies, purchasedItems]); 
+    
 
     return (    
      <GameContext.Provider 
