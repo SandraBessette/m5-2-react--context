@@ -36,14 +36,12 @@ export const GameProvider = ({ children }) => {
       }, []);      
       
     React.useEffect(() => {
-        const cookieSeconde = calculateCookiesPerSecond(purchasedItems);
-        if (cookieSeconde === 0)
-            return;
+        const cookieSeconde = calculateCookiesPerSecond(purchasedItems);     
 
         const storedTime = JSON.parse(window.localStorage.getItem('time')); 
         const timeDiffSeconds = Math.round((Date.now() - storedTime)/1000);         
        
-        if (storedTime && timeDiffSeconds) { 
+        if (storedTime && timeDiffSeconds) {           
            setNumCookies((c) => c + cookieSeconde * timeDiffSeconds); 
         } 
         window.localStorage.setItem('time', null);        
