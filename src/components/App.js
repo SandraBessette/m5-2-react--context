@@ -15,7 +15,7 @@ function App(props) {
    
     setNumCookies(numCookies + cookiesPerSecond);
   }, 1000);  
-
+ 
   return (
     <>
       <GlobalStyles />
